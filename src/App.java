@@ -1,6 +1,9 @@
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) throws Exception {
 
+        Scanner scanner = new Scanner(System.in);
         Estudiante[] estudiantes;
         // uso de constructor sin parametro
         Estudiante e1 = new Estudiante();
@@ -53,6 +56,35 @@ public class App {
             System.out.println("---------------");
         }
 
+        System.out.println("[ESTUDIANTES APROBADOS EN BASE A NOTA MINIMA]");
+        System.out.println("Ingrese el minimo de nota que se considera aprobado: ");
+        double minNota = Double.parseDouble(scanner.nextLine()); //might obviously thrown an exception..
+
+        Estudiante[] estudiantesAprob = getEstudiantesAprobados(estudiantes, minNota);
+        System.out.println("[ESTUDIANTES APROBADOS]");
+        System.out.println("---------------");
+        for (int i = 0; i < estudiantesAprob.length; i++) {
+            System.out.println(estudiantesAprob[i]);
+            System.out.println("---------------");
+        }
+        ;
+        System.out.println("[CANT.] => " + estudiantesAprob.length + " estudiantes aprobados.");
+        System.out.println("---------------");
+
+        System.out.println("[BUSCAR ESTUDIANTE POR NOMBRE]");
+        System.out.println("Ingrese el nombre de un estudiante a buscar: ");
+        String nombre = scanner.next();
+        Estudiante[] estNombreCoinciden = getEstudiantesPorNombre(estudiantes, nombre);
+        if (estNombreCoinciden.length > 0) {
+            for (int i = 0; i < estNombreCoinciden.length; i++) {
+                System.out.println(estNombreCoinciden[i]);
+                System.out.println("---------------");
+            };
+        } else {
+            System.out.println("No hubieron coincidencias para la busqueda: " + nombre + ".");
+            System.out.println("---------------");
+        }
+
     }
 
     public static double getPromedioCurso(Estudiante[] estudiantes) {
@@ -67,10 +99,10 @@ public class App {
         double promedioMayor = 0;
         int contEstPromedio = 0;
         for (int i = 0; i < estudiantes.length; i++) {
-            if (estudiantes[i].getPromedio() > promedioMayor){
+            if (estudiantes[i].getPromedio() > promedioMayor) {
                 promedioMayor = estudiantes[i].getPromedio();
                 contEstPromedio = 1;
-            } else if (estudiantes[i].getPromedio() == promedioMayor){
+            } else if (estudiantes[i].getPromedio() == promedioMayor) {
                 contEstPromedio++;
             }
         }
@@ -78,33 +110,71 @@ public class App {
         Estudiante[] estPromedioArr = new Estudiante[contEstPromedio];
         int indexEstPromedioArr = 0;
         for (int i = 0; i < estudiantes.length; i++) {
-            if (estudiantes[i].getPromedio() == promedioMayor){
+            if (estudiantes[i].getPromedio() == promedioMayor) {
                 estPromedioArr[indexEstPromedioArr++] = estudiantes[i];
             }
         }
         return estPromedioArr;
     }
 
-    public static Estudiante[] getEstudiantesAprobados(Estudiante[] estudiantes, double minimoNota){
+    public static Estudiante[] getEstudiantesAprobados(Estudiante[] estudiantes, double minimoNota) {
         int cantAprobados = getCountAprobados(estudiantes, minimoNota);
         Estudiante[] estudiantesAprobados = new Estudiante[cantAprobados];
         int contador = 0;
-        for (int i = 0; i < estudiantes.length; i++){
-            if (estudiantes[i].getPromedio() >= minimoNota){
+        for (int i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i].getPromedio() >= minimoNota) {
                 estudiantesAprobados[contador++] = estudiantes[i];
             }
-        };
+        }
+        ;
         return estudiantesAprobados;
     }
 
-    public static int getCountAprobados(Estudiante[] estudiantes, double minimoNota){
+    public static int getCountAprobados(Estudiante[] estudiantes, double minimoNota) {
         int count = 0;
-        for(int i = 0; i < estudiantes.length; i++){
-            if (estudiantes[i].getPromedio() >= minimoNota){
+        for (int i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i].getPromedio() >= minimoNota) {
                 count++;
             }
-        };
+        }
+        ;
         return count;
     }
+
+    public static Estudiante[] getEstudiantesPorNombre(Estudiante[] estudiantes, String nombre) {
+
+        int cont = 0;
+        for (int i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i].getNombre().equalsIgnoreCase(nombre)) {
+                cont++;
+            }
+        }
+        ;
+        Estudiante[] estCoinciden = new Estudiante[cont];
+        cont = 0;
+        for (int i = 0; i < estudiantes.length; i++) {
+            if (estudiantes[i].getNombre().equalsIgnoreCase(nombre)) {
+                estCoinciden[cont++] = estudiantes[i];
+            }
+        }
+        ;
+        return estCoinciden;
+    };
+
+    public static void showEstudiantesClasificacion(Estudiante[] estudiantes){
+        double promedio;
+        for(int i = 0; i < estudiantes.length; i++){
+            promedio = estudiantes[i].getPromedio();
+            if (promedio >= 0 && promedio <= 6){
+                System.out.println(estudiantes[i] + " Promedio menor a 7");
+            } else if (promedio >= 8 && promedio <= 10){
+                System.out.println(estudiantes[i] + " promedio mayor a 7");
+            } else {
+                System.out.println("Promedio fuera de rango?!! WHAT!");
+            }
+        };
+    }
+
+    
 
 }
