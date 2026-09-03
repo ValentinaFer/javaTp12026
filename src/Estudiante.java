@@ -53,6 +53,10 @@ public class Estudiante {
         this.promedio = promedio;
     }
 
+    public boolean isAprobado(){
+        return this.promedio >= 7;
+    }
+
     @Override
     public String toString(){
         return "Nombre completo: " + apellido + " " + nombre + ",\n" + "Edad: "+ edad + ",\n" + "Carrera: "+ carrera + ",\n" + "Promedio: "+ promedio;

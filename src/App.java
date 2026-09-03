@@ -175,6 +175,11 @@ public class App {
         };
     }
 
-    
+    public static void showEstudiantesCondicion(Estudiante[] estudiantes){
+        for (int i = 0; i < estudiantes.length; i++){
+            if (estudiantes[i].isAprobado()){
+                System.out.println(estudiantes[i]);
+            }
+        }
 
 }
