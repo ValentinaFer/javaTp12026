@@ -29,14 +29,17 @@ public class App {
         Estudiante e4 = new Estudiante("Peter", "Parker", "Ingenieria en algo", 21, 9.8);
         Estudiante e5 = new Estudiante("Bruce", "Wayne", "Ingenieria en ser Batman", 40, 10);
         Estudiante e6 = new Estudiante("Anna", "LeBeau", "Ingenieria en ser Rogue", 24, 9);
+        Estudiante e7 = new Estudiante("Anna", "Gomez", "No se", 24, 5);
 
-        estudiantes = new Estudiante[] { e1, e2, e3, e4, e5, e6 };
+
+        estudiantes = new Estudiante[] { e1, e2, e3, e4, e5, e6 , e7};
 
         for (int i = 0; i < estudiantes.length; i++) {
             System.out.println(
                     "Estudiante: " + estudiantes[i].getNombre() + ", Promedio: " + estudiantes[i].getPromedio());
         }
 
+        //Ejercicio 1
         System.out.println("---------------");
         System.out.println("[INFORMACION COMPLETA]");
         System.out.println("---------------");
@@ -46,9 +49,11 @@ public class App {
             System.out.println("---------------");
         }
 
+        //Ejercicio 2
         System.out.println("[PROMEDIO DEL CURSO] =>" + getPromedioCurso(estudiantes));
         System.out.println("---------------");
 
+        //Ejercicion 3, permite mostrar más de un estudiante, en case de promedios iguales
         System.out.println("[ESTUDIANTES CON MAYOR PROMEDIO] ");
         System.out.println("---------------");
         for (Estudiante estudiante : getEstudianteMayorPromedio(estudiantes)) {
@@ -56,6 +61,7 @@ public class App {
             System.out.println("---------------");
         }
 
+        //Ejercicio 4, permite ingresar la nota minima
         System.out.println("[ESTUDIANTES APROBADOS EN BASE A NOTA MINIMA]");
         System.out.println("Ingrese el minimo de nota que se considera aprobado: ");
         double minNota = Double.parseDouble(scanner.nextLine()); //might obviously thrown an exception..
@@ -66,11 +72,13 @@ public class App {
         for (int i = 0; i < estudiantesAprob.length; i++) {
             System.out.println(estudiantesAprob[i]);
             System.out.println("---------------");
-        }
-        ;
+        };
+        //hay tecnicamente uso de contador dentro de la function getEstudiantesAprobados(), no lo considere necesario aca
+        //ya que cont == arrayConResultados.length
         System.out.println("[CANT.] => " + estudiantesAprob.length + " estudiantes aprobados.");
         System.out.println("---------------");
 
+        //Ejercicio 5, permite encontrar más de una coincidencia
         System.out.println("[BUSCAR ESTUDIANTE POR NOMBRE]");
         System.out.println("Ingrese el nombre de un estudiante a buscar: ");
         String nombre = scanner.next();
@@ -84,6 +92,16 @@ public class App {
             System.out.println("No hubieron coincidencias para la busqueda: " + nombre + ".");
             System.out.println("---------------");
         }
+
+        //Ejercicio 6, nota mayor o igual a 7 es aprobado, menor a 7 desaprobado
+        System.out.println("[ALUMNOS QUE APRUEBAN O DESAPRUEBAN EN BASE A RANGO(0-6 desaprueba, 7-10 aprueba)]");
+        showEstudiantesClasificacion(estudiantes);
+        System.out.println("---------------");
+
+        //Ejercicio 7
+        System.out.println("[ALUMNOS QUE CUMPLEN CONDICION(con metodo en clase Estudiante)]");
+        showEstudiantesCondicion(estudiantes);
+        scanner.close();
 
     }
 
@@ -166,9 +184,9 @@ public class App {
         for(int i = 0; i < estudiantes.length; i++){
             promedio = estudiantes[i].getPromedio();
             if (promedio >= 0 && promedio <= 6){
-                System.out.println(estudiantes[i] + " Promedio menor a 7");
-            } else if (promedio >= 8 && promedio <= 10){
-                System.out.println(estudiantes[i] + " promedio mayor a 7");
+                System.out.println(estudiantes[i] + " Promedio menor a 7 DESAPRUEBA");
+            } else if (promedio >= 7 && promedio <= 10){
+                System.out.println(estudiantes[i] + " promedio mayor o igual a 7 APRUEBA");
             } else {
                 System.out.println("Promedio fuera de rango?!! WHAT!");
             }
@@ -181,5 +199,6 @@ public class App {
                 System.out.println(estudiantes[i]);
             }
         }
+    }
 
 }
